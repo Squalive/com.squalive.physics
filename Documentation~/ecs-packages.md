@@ -4,7 +4,7 @@ Unity's entity component system (ECS) is made up of several packages, and parts 
 
 The main parts of Unity you need to use:
 
-* [Entities](https://docs.unity3d.com/Packages/com.unity.entities@latest): An implementation of the Entity, Component, System (ECS) pattern.
+* [Entities](https://docs.unity3d.com/Packages/com.squalive.entities@latest): An implementation of the Entity, Component, System (ECS) pattern.
 * [C# Job System](https://docs.unity3d.com/Manual/JobSystem.html): A solution for fast, safe, multi-threaded code.
 * [Burst compiler](https://docs.unity3d.com/Packages/com.unity.burst@latest): A C# compiler that generates highly optimized code.
 * [Collections](https://docs.unity3d.com/Packages/com.unity.collections@latest): A set of unmanaged collection types, such as lists and hash maps. They're useful in jobs and Burst-compiled code because those contexts can only access unmanaged data.
@@ -14,4 +14,4 @@ Built on top of these core parts are additional DOTS packages:
 
 * **Physics** (this package): A stateless and deterministic physics system for entities. 
 * [Netcode](https://docs.unity3d.com/Packages/com.unity.netcode@latest): A client-server netcode solution for entities.
-* [Entities Graphics](https://docs.unity3d.com/Packages/com.unity.entities.graphics@latest): Uses the scriptable render pipeline (SRP) to render entities.
+* [Entities Graphics](https://docs.unity3d.com/Packages/com.squalive.entities.graphics@latest): Uses the scriptable render pipeline (SRP) to render entities.

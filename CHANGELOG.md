@@ -416,7 +416,7 @@ uid: unity-physics-changelog
 
 ### Changed
 * Package Dependencies
-    * `com.unity.entities` to version `0.51.1`
+    * `com.squalive.entities` to version `0.51.1`
     * `com.unity.physics` to version `0.51.1`
     * `com.unity.collections` to version `1.4.0`
 
@@ -425,7 +425,7 @@ uid: unity-physics-changelog
 ### Changed
 * Package Dependencies
     * `com.unity.burst` to version `1.6.6`
-    * `com.unity.entities` to version `0.51.0`
+    * `com.squalive.entities` to version `0.51.0`
     * `com.unity.mathematics` to version `1.2.6`
     * `com.unity.physics` to version `0.51.0`
     * `com.unity.collections` to version `1.3.1`
@@ -1336,7 +1336,7 @@ uid: unity-physics-changelog
 
 ### Changes
 
-* Updated dependency on `com.unity.entities` to version `0.1.1-preview`. If you need to stay on entities version `0.0.12-preview.33` then you can use the previous version of this package, `0.2.3-preview`, which is feature equivalent:
+* Updated dependency on `com.squalive.entities` to version `0.1.1-preview`. If you need to stay on entities version `0.0.12-preview.33` then you can use the previous version of this package, `0.2.3-preview`, which is feature equivalent:
 
 
 

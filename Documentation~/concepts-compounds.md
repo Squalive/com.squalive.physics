@@ -12,7 +12,7 @@ In the following example, **Body** is a single **Physics Body** that represents 
 <br/>*Compound shape hierarchy*
 
 >[!NOTE]
-> You must put all GameObjects (**Body** and its children) in a [sub scene](https://docs.unity3d.com/Packages/com.unity.entities@latest/index.html?subfolder=/manual/conversion-subscenes.html) so that Unity can perform [baking](https://docs.unity3d.com/Packages/com.unity.entities@latest/index.html?subfolder=/manual/baking.html) to convert them into entities and components.
+> You must put all GameObjects (**Body** and its children) in a [sub scene](https://docs.unity3d.com/Packages/com.squalive.entities@latest/index.html?subfolder=/manual/conversion-subscenes.html) so that Unity can perform [baking](https://docs.unity3d.com/Packages/com.squalive.entities@latest/index.html?subfolder=/manual/baking.html) to convert them into entities and components.
 
 ![compound_sim](images/compounds.gif)
 <br/>*The Compound shape in Play mode*
