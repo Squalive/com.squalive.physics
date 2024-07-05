@@ -106,18 +106,6 @@ namespace Unity.Physics.Extensions
             return worldFromBody.pos;
         }
 
-        public static void SetPosition( this ref PhysicsWorld physicsWorld, int rigidBodyIndex, float3 position )
-        {
-            if ( !( 0 <= rigidBodyIndex && rigidBodyIndex < physicsWorld.NumDynamicBodies ) ) return ;
-
-            var bodies = physicsWorld.Bodies;
-            var body = bodies[ rigidBodyIndex ];
-
-            body.WorldFromBody.pos = position;
-
-            bodies[ rigidBodyIndex ] = body;
-        }
-
         /// <summary>   An in PhysicsWorld extension method that gets a rotation. </summary>
         ///
         /// <param name="world">            The world to act on. </param>
