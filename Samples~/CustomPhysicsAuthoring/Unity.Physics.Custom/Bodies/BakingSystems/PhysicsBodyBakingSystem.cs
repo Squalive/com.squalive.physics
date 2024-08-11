@@ -19,16 +19,16 @@ namespace Unity.Physics.Authoring
 
     class PhysicsBodyAuthoringBaker : BasePhysicsBaker<PhysicsBodyAuthoring>
     {
-        // internal List<UnityEngine.Collider> colliderComponents = new List<UnityEngine.Collider>();
+        internal List<UnityEngine.Collider> colliderComponents = new List<UnityEngine.Collider>();
         internal List<PhysicsShapeAuthoring> physicsShapeComponents = new List<PhysicsShapeAuthoring>();
 
         public override void Bake(PhysicsBodyAuthoring authoring)
         {
             // Priority is to Legacy Components. Ignore if baked by Legacy.
-            // if (GetComponent<Rigidbody>()  || GetComponent<UnityEngine.Collider>())
-            // {
-            //     return;
-            // }
+            if (GetComponent<Rigidbody>()  || GetComponent<UnityEngine.Collider>())
+            {
+                return;
+            }
 
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             // To process later in the Baking System
@@ -54,19 +54,19 @@ namespace Unity.Physics.Authoring
                 AddComponent(entity, new PhysicsCustomTags { Value = customTags.Value });
 
             // Check that there is at least one collider in the hierarchy to add these three
-            // GetComponentsInChildren(colliderComponents);
-            // GetComponentsInChildren(physicsShapeComponents);
-            // if (colliderComponents.Count > 0 || physicsShapeComponents.Count > 0)
-            // {
-            //     AddComponent(entity, new PhysicsCompoundData()
-            //     {
-            //         AssociateBlobToBody = false,
-            //         ConvertedBodyInstanceID = authoring.GetInstanceID(),
-            //         Hash = default,
-            //     });
-            //     AddComponent<PhysicsRootBaked>(entity);
-            //     AddComponent<PhysicsCollider>(entity);
-            // }
+            GetComponentsInChildren(colliderComponents);
+            GetComponentsInChildren(physicsShapeComponents);
+            if (colliderComponents.Count > 0 || physicsShapeComponents.Count > 0)
+            {
+                AddComponent(entity, new PhysicsCompoundData()
+                {
+                    AssociateBlobToBody = false,
+                    ConvertedBodyInstanceID = authoring.GetInstanceID(),
+                    Hash = default,
+                });
+                AddComponent<PhysicsRootBaked>(entity);
+                AddComponent<PhysicsCollider>(entity);
+            }
 
             if (authoring.MotionType == BodyMotionType.Static || IsStatic())
                 return;

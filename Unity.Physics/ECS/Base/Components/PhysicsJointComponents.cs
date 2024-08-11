@@ -560,15 +560,9 @@ namespace Unity.Physics
         /// <param name="target">The target rotation around Joint's Axis, in radians.</param>
         /// <param name="maxImpulseOfMotor">The magnitude of the max impulse that a motor constraint can exert in a single
         /// step. This is a motor specific usage that does not represent the impulse threshold to break the motor.</param>
-        /// <param name="springFrequency">The spring frequency.</param>
-        /// <param name="springDamping">The spring damping.</param>
         /// <returns>   A Constraint. </returns>
         public static PhysicsJoint CreateRotationalMotor(
-            BodyFrame bodyAFromJoint, BodyFrame bodyBFromJoint,
-            float target,
-            float maxImpulseOfMotor = Constraint.DefaultMaxImpulse,
-            float springFrequency = Constraint.DefaultSpringFrequency,
-            float springDamping = Constraint.DefaultDampingRatio
+            BodyFrame bodyAFromJoint, BodyFrame bodyBFromJoint, float target, float maxImpulseOfMotor = Constraint.DefaultMaxImpulse
         ) =>
             new PhysicsJoint
         {
@@ -578,7 +572,7 @@ namespace Unity.Physics
             m_Constraints = new ConstraintBlock3
             {
                 Length = 3,
-                A = Constraint.MotorTwist(target, math.abs(maxImpulseOfMotor), springFrequency, springDamping),
+                A = Constraint.MotorTwist(target, math.abs(maxImpulseOfMotor)),
                 B = Constraint.Hinge(0),
                 C = Constraint.BallAndSocket()
             }
@@ -608,15 +602,9 @@ namespace Unity.Physics
         /// <param name="targetVelocity">The target angular velocity around Joint's Axis, in radians/s.</param>
         /// <param name="maxImpulseOfMotor">The magnitude of the max impulse that a motor constraint can exert in a single
         /// step. This is a motor specific usage that does not represent the impulse threshold to break the motor.</param>
-        /// <param name="springFrequency">The spring frequency.</param>
-        /// <param name="springDamping">The spring damping.</param>
         /// <returns>   A Constraint. </returns>
         public static PhysicsJoint CreateAngularVelocityMotor(
-            BodyFrame bodyAFromJoint, BodyFrame bodyBFromJoint,
-            float targetVelocity,
-            float maxImpulseOfMotor = Constraint.DefaultMaxImpulse,
-            float springFrequency = Constraint.DefaultSpringFrequency,
-            float springDamping = Constraint.DefaultDampingRatio
+            BodyFrame bodyAFromJoint, BodyFrame bodyBFromJoint, float targetVelocity, float maxImpulseOfMotor = Constraint.DefaultMaxImpulse
         ) =>
             new PhysicsJoint
         {
@@ -626,7 +614,7 @@ namespace Unity.Physics
             m_Constraints = new ConstraintBlock3
             {
                 Length = 3,
-                A = Constraint.AngularVelocityMotor(targetVelocity, math.abs(maxImpulseOfMotor), springFrequency, springDamping),
+                A = Constraint.AngularVelocityMotor(targetVelocity, math.abs(maxImpulseOfMotor)),
                 B = Constraint.Hinge(0),
                 C = Constraint.BallAndSocket()
             }
@@ -681,15 +669,9 @@ namespace Unity.Physics
         /// <param name="target">The target distance between the bodies' anchor points, along the Joint's Axis. This is the position the motor will be driving towards.</param>
         /// <param name="maxImpulseOfMotor">The magnitude of the max impulse that a motor constraint can exert in a single
         /// step. This is a motor specific usage that does not represent the impulse threshold to break the motor.</param>
-        /// <param name="springFrequency">The spring frequency.</param>
-        /// <param name="springDamping">The spring damping.</param>
         /// <returns>   A Constraint. </returns>
         public static PhysicsJoint CreatePositionMotor(
-            BodyFrame bodyAFromJoint, BodyFrame bodyBFromJoint,
-            float target,
-            float maxImpulseOfMotor = Constraint.DefaultMaxImpulse,
-            float springFrequency = Constraint.DefaultSpringFrequency,
-            float springDamping = Constraint.DefaultDampingRatio
+            BodyFrame bodyAFromJoint, BodyFrame bodyBFromJoint, float target, float maxImpulseOfMotor = Constraint.DefaultMaxImpulse
         ) =>
             new PhysicsJoint
         {
@@ -699,7 +681,7 @@ namespace Unity.Physics
             m_Constraints = new ConstraintBlock3
             {
                 Length = 3,
-                A = Constraint.MotorPlanar(target, math.abs(maxImpulseOfMotor), springFrequency, springDamping),
+                A = Constraint.MotorPlanar(target, math.abs(maxImpulseOfMotor)),
                 B = Constraint.FixedAngle(),
                 C = Constraint.Cylindrical(0, float2.zero)
             }
@@ -731,15 +713,9 @@ namespace Unity.Physics
         /// along the Joint's Axis.</param>
         /// <param name="maxImpulseOfMotor">The magnitude of the max impulse that a motor constraint can exert in a single
         /// step. This is a motor specific usage that does not represent the impulse threshold to break the motor.</param>
-        /// <param name="springFrequency">The spring frequency.</param>
-        /// <param name="springDamping">The spring damping.</param>
         /// <returns>   A Constraint. </returns>
         public static PhysicsJoint CreateLinearVelocityMotor(
-            BodyFrame bodyAFromJoint, BodyFrame bodyBFromJoint,
-            float target,
-            float maxImpulseOfMotor = Constraint.DefaultMaxImpulse,
-            float springFrequency = Constraint.DefaultSpringFrequency,
-            float springDamping = Constraint.DefaultDampingRatio
+            BodyFrame bodyAFromJoint, BodyFrame bodyBFromJoint, float target, float maxImpulseOfMotor = Constraint.DefaultMaxImpulse
         ) =>
             new PhysicsJoint
         {
@@ -749,7 +725,7 @@ namespace Unity.Physics
             m_Constraints = new ConstraintBlock3()
             {
                 Length = 2,
-                A = Constraint.LinearVelocityMotor(target, math.abs(maxImpulseOfMotor), springFrequency, springDamping),
+                A = Constraint.LinearVelocityMotor(target, math.abs(maxImpulseOfMotor)),
                 B = Constraint.FixedAngle()
             }
         };

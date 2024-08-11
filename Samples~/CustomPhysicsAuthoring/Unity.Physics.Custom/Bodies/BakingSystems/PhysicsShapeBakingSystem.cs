@@ -10,8 +10,8 @@ namespace Unity.Physics.Authoring
 {
     class PhysicsShapeBaker : BaseColliderBaker<PhysicsShapeAuthoring>
     {
-        // public static List<PhysicsShapeAuthoring> physicsShapeComponents = new List<PhysicsShapeAuthoring>();
-        // public static List<UnityEngine.Collider> colliderComponents = new List<UnityEngine.Collider>();
+        public static List<PhysicsShapeAuthoring> physicsShapeComponents = new List<PhysicsShapeAuthoring>();
+        public static List<UnityEngine.Collider> colliderComponents = new List<UnityEngine.Collider>();
 
         bool ShouldConvertShape(PhysicsShapeAuthoring authoring)
         {
@@ -93,29 +93,31 @@ namespace Unity.Physics.Authoring
             // The Rigidbody cannot know about the Physics Shape Component. We need to take responsibility of baking the collider.
             if (rb || (!rb && !pb) && body == shapeGameObject)
             {
-                // GetComponents(physicsShapeComponents);
-                // GetComponents(colliderComponents);
-                
+                GetComponents(physicsShapeComponents);
+                GetComponents(colliderComponents);
                 // We need to check that there are no other colliders in the same object, if so, only the first one should do this, otherwise there will be 2 bakers adding this to the entity
                 // This will be needed to trigger BuildCompoundColliderBakingSystem
                 // If they are legacy Colliders and PhysicsShapeAuthoring in the same object, the PhysicsShapeAuthoring will add this
-                var entity = GetEntity(TransformUsageFlags.Dynamic);
-            
-                // // Rigid Body bakes always add the PhysicsWorldIndex component and process transform
-                if (!hasBodyComponent)
+                if (colliderComponents.Count == 0 && physicsShapeComponents.Count > 0 && physicsShapeComponents[0].GetInstanceID() == shapeInstanceID)
                 {
-                    AddSharedComponent(entity, new PhysicsWorldIndex());
-                    PostProcessTransform(bodyTransform);
+                    var entity = GetEntity(TransformUsageFlags.Dynamic);
+
+                    // // Rigid Body bakes always add the PhysicsWorldIndex component and process transform
+                    if (!hasBodyComponent)
+                    {
+                        AddSharedComponent(entity, new PhysicsWorldIndex());
+                        PostProcessTransform(bodyTransform);
+                    }
+
+                    AddComponent(entity, new PhysicsCompoundData()
+                    {
+                        AssociateBlobToBody = false,
+                        ConvertedBodyInstanceID = shapeInstanceID,
+                        Hash = default,
+                    });
+                    AddComponent<PhysicsRootBaked>(entity);
+                    AddComponent<PhysicsCollider>(entity);
                 }
-            
-                AddComponent(entity, new PhysicsCompoundData()
-                {
-                    AssociateBlobToBody = false,
-                    ConvertedBodyInstanceID = shapeInstanceID,
-                    Hash = default,
-                });
-                AddComponent<PhysicsRootBaked>(entity);
-                AddComponent<PhysicsCollider>(entity);
             }
 
             return data;

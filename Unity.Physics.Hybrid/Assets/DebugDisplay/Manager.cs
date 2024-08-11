@@ -1,5 +1,3 @@
-#if UNITY_EDITOR
-
 using UnityEngine;
 using Unity.Collections.LowLevel.Unsafe;
 using System.IO;
@@ -372,5 +370,3 @@ namespace Unity.DebugDisplay
         }
     }
 }
-
-#endif

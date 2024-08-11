@@ -1,6 +1,6 @@
 # Upgrading from Physics 0.51 to 1.0
 
-To upgrade from Physics 0.51 to 1.0, you firstly need to upgrade your Entities package following the com.squalive.entities [package upgrade guide](https://docs.unity3d.com/Packages/com.squalive.entities@1.0/manual/index.html).
+To upgrade from Physics 0.51 to 1.0, you firstly need to upgrade your Entities package following the com.unity.entities [package upgrade guide](https://docs.unity3d.com/Packages/com.unity.entities@1.0/manual/index.html).
 
 ## Physics pipeline reworked
 

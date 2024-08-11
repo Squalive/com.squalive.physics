@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 namespace Unity.Physics.Tests.Authoring
 {
     // Base fixture for conversion system tests involving sub-scenes.
-    // Note: class mirrors some functionality in com.squalive.entities' SubSceneConversionTests
+    // Note: class mirrors some functionality in com.unity.entities' SubSceneConversionTests
     class ConversionSystem_SubScene_IntegrationTestsFixture
     {
         EnterPlayModeOptions m_EnterPlayModeOptions;

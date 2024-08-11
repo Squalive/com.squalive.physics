@@ -9,8 +9,6 @@ using Unity.Transforms;
 
 namespace Unity.Physics.Authoring
 {
-#if UNITY_EDITOR
-
     /// <summary>
     /// A component system group that contains the physics debug display systems.
     /// </summary>
@@ -115,12 +113,6 @@ namespace Unity.Physics.Authoring
 #if UNITY_EDITOR
             if (m_DrawComponentGameObject != null)
             {
-                var drawComponent = m_DrawComponentGameObject.GetComponentInChildren<DrawComponent>();
-                if (drawComponent)
-                {
-                    drawComponent.System = null;
-                }
-
                 while (m_DrawComponentGameObject.transform.childCount > 0)
                 {
                     var child = m_DrawComponentGameObject.transform.GetChild(0);
@@ -395,6 +387,4 @@ namespace Unity.Physics.Authoring
     [RequireMatchingQueriesForUpdate]
     public partial class PhysicsDebugDisplaySystem_Editor : PhysicsDebugDisplaySystem
     {}
-
-#endif
 }

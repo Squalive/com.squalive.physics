@@ -11,7 +11,6 @@ namespace Unity.Physics.Systems
         EntityQuery m_ColliderBlobCleanupOnUpdateQuery;
         EntityQuery m_ColliderBlobCleanupOnDestroyQuery;
 
-        [BurstCompile]
         partial struct ColliderBlobCleanupJob : IJobEntity
         {
             public EntityCommandBuffer.ParallelWriter ECB;
@@ -45,7 +44,6 @@ namespace Unity.Physics.Systems
             state.RequireForUpdate(m_ColliderBlobCleanupOnUpdateQuery);
         }
 
-        [BurstCompile]
         public void OnDestroy(ref SystemState state)
         {
             foreach (var blobCleanup in SystemAPI.Query<ColliderBlobCleanupData>())

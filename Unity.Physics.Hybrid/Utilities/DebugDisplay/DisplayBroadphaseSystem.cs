@@ -3,6 +3,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Physics.Systems;
 
 namespace Unity.Physics.Authoring
 {
@@ -14,10 +15,10 @@ namespace Unity.Physics.Authoring
     internal struct DisplayBroadphaseJob : IJob
     {
         [ReadOnly]
-        public NativeList<BoundingVolumeHierarchy.Node> StaticNodes;
+        public NativeArray<BoundingVolumeHierarchy.Node> StaticNodes;
 
         [ReadOnly]
-        public NativeList<BoundingVolumeHierarchy.Node> DynamicNodes;
+        public NativeArray<BoundingVolumeHierarchy.Node> DynamicNodes;
 
         internal void DrawLeavesRecursive(NativeArray<BoundingVolumeHierarchy.Node> nodes, Unity.DebugDisplay.ColorIndex color, int nodeIndex)
         {
@@ -48,8 +49,8 @@ namespace Unity.Physics.Authoring
 
         public void Execute()
         {
-            DrawLeavesRecursive(StaticNodes.AsArray(), Unity.DebugDisplay.ColorIndex.Yellow, 1);
-            DrawLeavesRecursive(DynamicNodes.AsArray(), Unity.DebugDisplay.ColorIndex.Red, 1);
+            DrawLeavesRecursive(StaticNodes, Unity.DebugDisplay.ColorIndex.Yellow, 1);
+            DrawLeavesRecursive(DynamicNodes, Unity.DebugDisplay.ColorIndex.Red, 1);
         }
     }
 
@@ -62,7 +63,6 @@ namespace Unity.Physics.Authoring
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<PhysicsDebugDisplayData>();
-            state.RequireForUpdate<PhysicsWorldSingleton>();
         }
 
         public void OnUpdate(ref SystemState state)

@@ -5,13 +5,12 @@ using Unity.Collections;
 using Unity.DebugDisplay;
 using Unity.Entities;
 using Unity.Transforms;
+using UnityEngine.SocialPlatforms;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Unity.Physics.Authoring
 {
-#if UNITY_EDITOR
-
     internal readonly struct ColliderGeometry : IDisposable
     {
         internal readonly NativeArray<Vector3> VerticesArray;
@@ -55,6 +54,7 @@ namespace Unity.Physics.Authoring
         private static readonly ColorIndex DebugStaticColor = ColorIndex.StaticMesh;
         private static readonly ColorIndex DebugKinematicColor = ColorIndex.KinematicMesh;
 
+#if UNITY_EDITOR
         private static void CreateGeometryArray(MeshType meshType, out ColliderGeometry outGeometry)
         {
             var vertices = new List<Vector3>();
@@ -174,6 +174,8 @@ namespace Unity.Physics.Authoring
                 SphereGeometry = sphereGeometry
             };
         }
+
+#endif
 
         public static ColorIndex GetColorIndex(BodyMotionType motionType)
         {
@@ -440,5 +442,4 @@ namespace Unity.Physics.Authoring
             return capsuleEdges;
         }
     }
-#endif
 }

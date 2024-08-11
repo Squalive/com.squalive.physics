@@ -1,5 +1,3 @@
-#if UNITY_EDITOR
-
 using System;
 using Unity.Burst;
 using Unity.Mathematics;
@@ -308,5 +306,3 @@ namespace Unity.DebugDisplay
         }
     }
 }
-
-#endif

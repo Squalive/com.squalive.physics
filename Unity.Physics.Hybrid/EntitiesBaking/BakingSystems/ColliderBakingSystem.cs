@@ -46,18 +46,11 @@ namespace Unity.Physics.Authoring
 
         Material ProduceMaterial(UnityEngine.Collider collider)
         {
+            // n.b. need to manually opt in to collision events with legacy colliders if desired
             var material = new Material();
             if (collider.isTrigger)
             {
                 material.CollisionResponse = CollisionResponsePolicy.RaiseTriggerEvents;
-            }
-            else if (collider.providesContacts)
-            {
-                material.CollisionResponse = CollisionResponsePolicy.CollideRaiseCollisionEvents;
-            }
-            else
-            {
-                material.CollisionResponse = CollisionResponsePolicy.Collide;
             }
 
             var physicsMaterial = collider.sharedMaterial;
@@ -103,50 +96,42 @@ namespace Unity.Physics.Authoring
             // Declaring the dependency on the GameObject with GetLayer, so the baker rebakes if the layer changes
             var layer = GetLayer(collider);
 
-            uint belongsTo = 1u << layer;
-
-            uint collidesWith = 0u;
+            // create filter and assign layer of this collider
+            var filter = new CollisionFilter { BelongsTo = 1u << layer };
 
             if ( body.TryGetComponent( out CollisionFilterAuthoring filterAuthoring ) )
             {
-                belongsTo = (uint)filterAuthoring.belongsTo;
-                collidesWith = (uint)filterAuthoring.collidesWith;
+                filter.BelongsTo = ( uint ) filterAuthoring.belongsTo;
+                filter.CollidesWith = ( uint ) filterAuthoring.collidesWith;
             }
+            else
+            {
+                uint includeMask = 0u;
+                // incorporate global layer collision matrix
+                for (var i = 0; i < 32; ++i)
+                {
+                    includeMask |= UnityEngine.Physics.GetIgnoreLayerCollision(layer, i) ? 0 : 1u << i;
+                }
 
-            // create filter and assign layer of this collider
-            var filter = new CollisionFilter {BelongsTo = belongsTo, CollidesWith = collidesWith};
+                // Now incorporate the layer overrides.
+                // The exclude layers take precedence over the include layers.
 
-            // // Declaring the dependency on the GameObject with GetLayer, so the baker rebakes if the layer changes
-            // var layer = GetLayer(collider);
-            //
-            // // create filter and assign layer of this collider
-            // var filter = new CollisionFilter {BelongsTo = 1u << layer};
-            //
-            // uint includeMask = 0u;
-            // // incorporate global layer collision matrix
-            // for (var i = 0; i < 32; ++i)
-            // {
-            //     includeMask |= UnityEngine.Physics.GetIgnoreLayerCollision(layer, i) ? 0 : 1u << i;
-            // }
-            //
-            // // Now incorporate the layer overrides.
-            // // The exclude layers take precedence over the include layers.
-            //
-            // includeMask |= (uint)collider.includeLayers.value;
-            // var excludeMask = (uint)collider.excludeLayers.value;
-            //
-            // // obtain rigid body if any, and incorporate its layer overrides
-            // var rigidBody = body.GetComponent<Rigidbody>();
-            // if (rigidBody)
-            // {
-            //     includeMask |= (uint)rigidBody.includeLayers.value;
-            //     excludeMask |= (uint)rigidBody.excludeLayers.value;
-            // }
-            //
-            // // apply exclude mask to include mask and set the final result
-            // includeMask &= ~excludeMask;
-            //
-            // filter.CollidesWith = includeMask;
+                includeMask |= (uint)collider.includeLayers.value;
+                var excludeMask = (uint)collider.excludeLayers.value;
+
+                // obtain rigid body if any, and incorporate its layer overrides
+                var rigidBody = body.GetComponent<Rigidbody>();
+                if (rigidBody)
+                {
+                    includeMask |= (uint)rigidBody.includeLayers.value;
+                    excludeMask |= (uint)rigidBody.excludeLayers.value;
+                }
+
+                // apply exclude mask to include mask and set the final result
+                includeMask &= ~excludeMask;
+
+                filter.CollidesWith = includeMask;
+            }
 
             return filter;
         }

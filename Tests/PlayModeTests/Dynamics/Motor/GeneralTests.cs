@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using Unity.Mathematics;
-
 namespace Unity.Physics.Tests.Motors
 {
     // Test cases we want to verify:

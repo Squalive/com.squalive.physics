@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,38 +15,39 @@ namespace Unity.Physics.Hybrid.Authoring
     }
 
 #if UNITY_EDITOR
-    [CustomEditor(typeof(CollisionFilterAuthoring))]
+    [ CustomEditor( typeof( CollisionFilterAuthoring ) ) ]
     public class CollisionLayerEditor : Editor
     {
-        public override void OnInspectorGUI()
+        public override void OnInspectorGUI( )
         {
-            var layer = (CollisionFilterAuthoring)target;
+            var layer = ( CollisionFilterAuthoring ) target;
 
-            EditorGUI.BeginChangeCheck();
+            EditorGUI.BeginChangeCheck( );
 
-            EditorGUILayout.BeginVertical("Box");
+            EditorGUILayout.BeginVertical( "Box" );
 
             EditorGUI.indentLevel = 0;
 
-            EditorGUILayout.LabelField("Filter");
+            EditorGUILayout.LabelField( "Filter" );
 
             EditorGUI.indentLevel = 1;
 
-            GUILayout.Space(5);
+            GUILayout.Space( 5 );
 
-            layer.belongsTo = (CollisionLayer)EditorGUILayout.EnumFlagsField("Belongs To", layer.belongsTo);
+            layer.belongsTo = ( CollisionLayer ) EditorGUILayout.EnumFlagsField( "Belongs To", layer.belongsTo );
 
-            layer.collidesWith = (CollisionLayer)EditorGUILayout.EnumFlagsField("Collides With", layer.collidesWith);
+            layer.collidesWith =
+                ( CollisionLayer ) EditorGUILayout.EnumFlagsField( "Collides With", layer.collidesWith );
 
-            EditorGUILayout.EndVertical();
+            EditorGUILayout.EndVertical( );
 
-            if (EditorGUI.EndChangeCheck())
+            if ( EditorGUI.EndChangeCheck( ) )
             {
-                Undo.RecordObject(layer, "Changed Layers");
+                Undo.RecordObject( layer, "Changed Layers" );
 
-                EditorUtility.SetDirty(layer);
+                EditorUtility.SetDirty( layer );
 
-                serializedObject.ApplyModifiedProperties();
+                serializedObject.ApplyModifiedProperties( );
             }
         }
     }
